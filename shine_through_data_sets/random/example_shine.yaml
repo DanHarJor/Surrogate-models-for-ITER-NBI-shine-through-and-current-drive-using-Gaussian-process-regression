@@ -1,0 +1,134 @@
+# general:
+#   pack_data_hdf5: True
+
+executor:
+  type: DaskExecutor
+  base_run_dir: /home/ITER/jordand/enchanted_plugins/data/DT_D_random_expanded
+  save_run_dirs: False
+
+  runner_config:
+    type: ShineRunner
+    imas_db_suffix: "DT_D_random_expanded"
+    run_bbnbi: 1
+    bbnbi_n_markers: 10000
+    pl_spec: 'DT'
+    nbi_spec: 'D'
+    return_mode: 'all'
+    executable_path: /home/ITER/pietrov/shared_work_AIML/version8_DTplasma_H_Dnbi_daniel/workflow_AI.sh #/home/ITER/pietrov/shared_work_AIML/version8_DTplasma_H_Dnbi/workflow_AI.sh
+    nbi_injector: 1
+    do_clean: True
+
+    # constant_params:
+    #   enbi: 685.0
+    #   nbar: 2.835
+    #   np: 1.25
+    #   hfactor: 1.15
+  # LocalCluster_config:
+  #   name: 'es-dask_cluster'
+  #   n_workers: 55
+  #   threads_per_worker: 1
+
+  # scale_n_jobs: 8
+  scale_n_jobs_min: 1
+  scale_n_jobs_max: 30
+  SLURMcluster_config:
+    name: 'SDCC_cluster'
+    queue: all #sirius #sun
+    cores: 20 # number of cores per worker
+    processes: 1 # num workers per slurm job
+    memory: 100GB #"170GB" #memory to ask for in slurm script # divided between workers set up on this script # memory on a sirius node 512GB
+    walltime: "48:00:00" #Max time limit of entire cluster
+    # job_extra_directives:
+      # - "--nodes 1"
+      # - "--partition sirius"
+      # - "--ntasks 1"
+    interface: "bond0"
+    # The job script prologue is ran on every worker at start up
+    # job_script_prologue:
+    #   - 'source /home/ITER/jordand/enchanted_env/bin/activate'
+    #     # this is possibly dependent on which code you want
+    #   # Change this for your own personal enchanted surrogates clone
+    #   # - 'cd /users/danieljordan/enchanted-surrogates/'
+    #   - 'cd /home/ITER/jordand/enchanted-surrogates/src'
+    #   # This command gives the worker access to the python within our container.
+    #   - export PYTHONPATH=$PYTHONPATH:/home/ITER/jordand/enchanted-surrogates/src 
+    #   # - 'export PYTHONPATH=$PYTHONPATH:/users/danieljordan/enchanted-surrogates2/src' # NB: to use the enchanted-surrogate library
+    # # These are appended to the sbatch that requestes the resources for each worker.    
+
+  # sampler_config:
+  #   type: gpy_analytic_sobol_sampler
+  #   test_data_csv: /home/ITER/jordand/enchanted_plugins/data/DT_D_random/enchanted_dataset.csv
+  #   write_batch_info_every_x_samples: 10
+  #   num_repeats: 5
+  #   max_y: 0.3
+  #   include_index: True
+  #   initial_batch_size: 10
+  #   batch_size: 10
+  #   parameters: ['enbi', 'nbar', 'np', 'hfactor']
+  #   bounds: [[500,870], [0.6,5.07], [1,1.5], [0.8,1.5]]
+        
+  #   budget: 1000
+  #   acquisition_mode: "random"
+  #   # blend_string: "0.33-var_0.33-grad_0.34-noise"
+
+  sampler_config:
+    type: RandomSampler
+    parameters: ['enbi', 'nbar', 'np', 'hfactor']
+    bounds: [[500,1000], [0.6,5], [1,1.5], [0.8,1.5]]
+    num_samples: 300 
+    include_index: True
+    num_repeats: 5
+
+  # # SLURMcluster_config:
+  # #   name: es-example_cluster
+  # #   cores: 1
+  # #   memory: 1GB
+  # #   walltime: '12:00:00'
+  # #   processes: 1
+  # #   interface: nmn0
+  # #   account: project_462000954
+  # #   queue: small
+  # # scale_n_jobs: 2    
+
+  # sampler_config:
+  #   type: grid_sampler
+  #   parameters: ['bbnbi_n_markers']
+  #   bounds: [[5000,50000]]
+  #   num_samples: 3
+  #   num_repeats: 10
+  #   include_index: True
+
+  # sampler_config:
+  #   type: provide_list_sampler
+  #   parameters: ['bbnbi_n_markers','enbi', 'nbar', 'np', 'hfactor']
+  #   samples_lists: [[1000],[685.0],[2.835],[1.25],[1.15]]
+  #   num_repeats: 10000
+  #   include_index: True
+  
+  # sampler_config:
+  #   type: gpy_analytic_sobol_sampler
+  #   write_batch_info_every_x_samples: 1
+  #   parameters: ['enbi', 'nbar', 'np', 'hfactor']
+  #   bounds: [[500,870], [0.6,5.07], [1,1.5], [0.8,1.5]]
+  #   budget: 5000
+  #   include_index: True
+  #   num_repeats: 5
+  #   initial_pool_size: 16384
+  #   initial_pool_samples_strategy: first
+  #   initial_batch_size: 10
+  #   batch_size: 3
+  #   pool_sampler_config:
+  #     type: SobolSequence
+  #     parameters: ['enbi', 'nbar', 'np', 'hfactor']
+  #     bounds: [[500,870], [0.6,5.07], [1,1.5], [0.8,1.5]]
+  #     num_samples: 16384
+  #     include_index: True
+
+  # sampler_config:
+  #   type: SobolSequence
+  #   parameters: ['enbi', 'nbar', 'np', 'hfactor']
+  #   bounds: [[500,1000], [0.6,5.0], [1,1.5], [0.8,1.5]]
+  #   include_index: True
+  #   num_samples: 256
+  #   num_repeats: 5
+  #   # fast_forward: 16384 # num_samples + fast forward should be a power of 2
