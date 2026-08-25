@@ -10,7 +10,7 @@ plt.style.use(['science', 'no-latex'])
 script_dir = os.path.dirname(os.path.abspath(__file__))
 input_csv = os.path.join(script_dir, "..", "shine_through_data_sets", "current_drive_1d_demo", "1d_slice_current_drive.csv")
 output_png = os.path.join(script_dir, "plots", "Figure_1D_Analysis.png")
-base_run_dir = os.path.join(script_dir, "dummy_brd_1D_demo")
+base_run_dir = os.path.join(script_dir, "..", "shine_through_data_sets", "current_drive_1d_demo", "dummy_brd_1D_demo")
 
 # ---------------------------------------------------------
 # Normalisation helper
