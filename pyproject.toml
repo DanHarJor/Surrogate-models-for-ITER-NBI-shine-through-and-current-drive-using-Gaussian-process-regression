@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iter-nbi-surrogate-plots"
+version = "0.1.0"
+description = "Plotting scripts and data for the ITER NBI shine-through and current-drive GPR surrogate paper"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "matplotlib",
+    "scienceplots",
+    "scikit-learn",
+    "GPy",
+]
+
+[tool.setuptools]
+packages = []
+
+# enchanted-surrogates is vendored as a git submodule (./enchanted-surrogates)
+# rather than a pyproject dependency. After cloning with submodules
+# (git submodule update --init --recursive), install it separately:
+#   pip install -e .
+#   pip install -e ./enchanted-surrogates

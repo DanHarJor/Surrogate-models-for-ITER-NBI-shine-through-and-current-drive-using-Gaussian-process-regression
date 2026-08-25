@@ -1,0 +1,4 @@
+[submodule "enchanted-surrogates"]
+	path = enchanted-surrogates
+	url = git@github.com:DIGIfusion/enchanted-surrogates.git
+	branch = ascot_ai_branch
