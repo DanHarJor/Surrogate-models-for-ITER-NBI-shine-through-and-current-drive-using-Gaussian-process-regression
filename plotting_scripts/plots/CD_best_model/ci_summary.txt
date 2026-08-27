@@ -1,0 +1,9 @@
+CI coverage summary (lambda * predict_noiseless + test-set SEM)
+==================================================
+Output: CD [MA]
+Test set size (n): 256
+Confidence level: 95% (z=1.96)
+
+Fitted epistemic scale factor (lambda): 2.13453
+
+Test points inside 95% CI (using lambda*predict_noiseless + test-set SEM): 94.9%
