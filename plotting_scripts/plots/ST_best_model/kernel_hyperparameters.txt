@@ -1,0 +1,13 @@
+Output model (gpy_model.pkl)
+  lengthscale[enbi] = 2.81529
+  lengthscale[nbar] = 0.428481
+  lengthscale[np] = 25.4709
+  lengthscale[hfactor] = 50.9993
+  amplitude (kernel variance) = 16.0938
+
+Noise model (gpy_noise_model.pkl)
+  lengthscale[enbi] = 1.01071
+  lengthscale[nbar] = 0.111065
+  lengthscale[np] = 4901.6
+  lengthscale[hfactor] = 5.95458
+  amplitude (kernel variance) = 0.735923

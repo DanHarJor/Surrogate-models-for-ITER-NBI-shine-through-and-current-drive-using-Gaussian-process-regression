@@ -214,7 +214,7 @@ def plot_sampling_strategy_comparison(
         ax = fig.add_subplot(gs[0])
         if base_metric == 'rmse':
             ax.set_xlim(0, 50)
-            ax.set_ylim(0, 0.02)
+            ax.set_ylim(0.001, 0.01)
         ax_legend = fig.add_subplot(gs[1])
         ax_legend.axis("off")
 
