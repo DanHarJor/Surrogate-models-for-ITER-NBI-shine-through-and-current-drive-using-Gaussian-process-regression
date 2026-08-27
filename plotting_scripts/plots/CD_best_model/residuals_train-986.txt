@@ -1,0 +1,5 @@
+header: Residuals & True-vs-Predicted (TEST)
+lengthscales: enbi: 0.407, nbar: 0.368, np: 1.49, hfactor: 0.333
+RMSE: 5731.0
+R2: 0.9966
+MAPE_percent: 95.7

@@ -1,0 +1,42 @@
+# general:
+#   pack_data_hdf5: True
+
+executor:
+  type: DaskExecutor
+  # block_until_cluster_started: True 
+  base_run_dir: ./data/GPR_Var9
+  save_run_dirs: False
+
+  LocalCluster_config:
+    n_workers: 1
+    threads_per_worker: 1
+    # processes: True
+    memory_limit: 10GB
+
+  runner_config:
+    type: csv_runner
+    csv_path: /scratch/project_2013233/enchanted_plugins/data/ascot_DT-D_random_extended/enchanted_dataset.csv
+    output_col: current_drive_A
+    remove_from_cache: True
+    remove_run_dir: True
+    tol: 0.001
+    
+  sampler_config:
+    type: gpy_analytic_sobol_sampler
+    output_col: current_drive_A
+    test_data_csv: /scratch/project_2013233/enchanted_plugins/data/ascot_DT-D_sobol_seq_extended/enchanted_dataset.csv
+    write_batch_info_every_x_samples: 50
+    # initial_pool_size: 100000
+    initial_batch_size: 5
+    batch_size: 1
+    pool_csv_path: /scratch/project_2013233/enchanted_plugins/data/ascot_DT-D_random_extended/enchanted_dataset.csv
+    num_repeats: 5
+    # seed: 42
+    acquisition_mode: "var"
+    parameters: ['enbi', 'nbar', 'np', 'hfactor']
+    bounds: [[500,870], [3.58, 11.94], [1,1.5], [0.8,1.5]] # nbar range for slowing down simulations
+
+    do_normalize_y: True
+    budget: 1000
+    # do_residuals_plot: True
+
