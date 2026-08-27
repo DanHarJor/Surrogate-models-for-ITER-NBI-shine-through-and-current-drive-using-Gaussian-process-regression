@@ -1,0 +1,43 @@
+# general:
+#   pack_data_hdf5: True
+
+executor:
+  type: DaskExecutor
+  # block_until_cluster_started: True 
+  base_run_dir: ./data/GPR_VIGF1
+  # save_run_dirs: False
+
+  LocalCluster_config:
+    n_workers: 1
+    threads_per_worker: 1
+    # processes: True
+    memory_limit: 10GB
+
+  runner_config:
+    type: csv_runner
+    csv_path: /home/ITER/jordand/enchanted_plugins/data/DT_D_random_expanded/maxST0.3_filtered.csv
+    output_col: output_shine_inj1
+    remove_from_cache: True
+    remove_run_dir: True
+    tol: 0.001
+    
+  sampler_config:
+    type: gpy_analytic_sobol_sampler
+    output_col: output_shine_inj1
+    test_data_csv:  /home/ITER/jordand/enchanted_plugins/data/DT_D_sobolseq_expanded/maxST0.3_filtered.csv
+    
+    write_batch_info_every_x_samples: 5
+    # initial_pool_size: 100000
+    initial_batch_size: 5
+    batch_size: 1
+    pool_csv_path: /home/ITER/jordand/enchanted_plugins/data/DT_D_random_expanded/maxST0.3_filtered.csv
+    num_repeats: 5
+    # seed: 42
+    acquisition_mode: "vigf"
+    parameters: ['enbi', 'nbar', 'np', 'hfactor']
+    bounds: [[500,1000], [0.6,5.0], [1,1.5], [0.8,1.5]]
+
+    do_normalize_y: True
+    budget: 500
+    # do_residuals_plot: True
+

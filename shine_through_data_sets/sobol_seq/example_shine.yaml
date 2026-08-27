@@ -30,14 +30,14 @@ executor:
 
   # scale_n_jobs: 8
   scale_n_jobs_min: 1
-  scale_n_jobs_max: 30
+  scale_n_jobs_max: 3
   SLURMcluster_config:
     name: 'SDCC_cluster'
     queue: all #sirius #sun
     cores: 20 # number of cores per worker
     processes: 1 # num workers per slurm job
     memory: 100GB #"170GB" #memory to ask for in slurm script # divided between workers set up on this script # memory on a sirius node 512GB
-    walltime: "48:00:00" #Max time limit of entire cluster
+    walltime: "24:00:00" #Max time limit of entire cluster is 48
     # job_extra_directives:
       # - "--nodes 1"
       # - "--partition sirius"
@@ -71,13 +71,13 @@ executor:
   #   acquisition_mode: "random"
   #   # blend_string: "0.33-var_0.33-grad_0.34-noise"
 
-  sampler_config:
-    type: RandomSampler
-    parameters: ['enbi', 'nbar', 'np', 'hfactor']
-    bounds: [[500,870], [0.6,5], [1,1.5], [0.8,1.5]]
-    num_samples: 300 
-    include_index: True
-    num_repeats: 5
+  # sampler_config:
+  #   type: RandomSampler
+  #   parameters: ['enbi', 'nbar', 'np', 'hfactor']
+  #   bounds: [[500,1000], [0.6,5], [1,1.5], [0.8,1.5]]
+  #   num_samples: 300 
+  #   include_index: True
+  #   num_repeats: 5
 
   # # SLURMcluster_config:
   # #   name: es-example_cluster
@@ -124,11 +124,11 @@ executor:
   #     num_samples: 16384
   #     include_index: True
 
-  # sampler_config:
-  #   type: SobolSequence
-  #   parameters: ['enbi', 'nbar', 'np', 'hfactor']
-  #   bounds: [[500,1000], [0.6,5.0], [1,1.5], [0.8,1.5]]
-  #   include_index: True
-  #   num_samples: 256
-  #   num_repeats: 5
-  #   # fast_forward: 16384 # num_samples + fast forward should be a power of 2
+  sampler_config:
+    type: SobolSequence
+    parameters: ['enbi', 'nbar', 'np', 'hfactor']
+    bounds: [[500,1000], [0.6,5.0], [1,1.5], [0.8,1.5]]
+    include_index: True
+    num_samples: 256
+    num_repeats: 5
+    # fast_forward: 16384 # num_samples + fast forward should be a power of 2
